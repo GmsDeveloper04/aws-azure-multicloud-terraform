@@ -1,0 +1,56 @@
+public static void log(String message, LogLevel level){
+
+		//GERA A MENSAGEM DE LOG
+
+		// DATA-HORA - LEVEL - MENSAGEM - SO - IP - VERSAO_APP
+		String logMessage = new StringBuilder(LocalDateTime.now().toString())
+				.append(" - ")
+				.append(level.toString())
+				.append(" - ")
+				.append(message).toString();
+
+		try {
+			//REFERENCIA O ARQUIVO DESTINO DO LOG
+			Path logFile = Paths.get("./log.txt");
+
+			//VERIFICA SE O ARQUIVO NAO EXISTE (ARQUIVO ONDE FICARA OS LOGS)
+			if(!logFile.toFile().exists())
+				logFile.toFile().createNewFile(); // CRIA O ARQUIVO DE LOG CASO ELE NÃO EXISTA
+
+
+			//PEGA O TAMANHO DO ARQUIVO DE LOG EM BYTES
+			long size = Files.size(logFile);
+
+			//DESCOBRE A QUANTIDADE EM MEGAS DO ARQUIVO
+			long mega = size / 1024;
+
+			//SE CHEGAR EM UM MEGA, ELE : 1 - COPIA O ARQUIVO DE LOG1.TXT, 2 - EXCLUI O ARQUIVO DE LOG QUE ESTA CHEIO, 3 - CRIA UM ARQUIVO DE LOG VAZIO COM O NOME DO QUE ESTAVA CHEIO
+			if(mega == 1){
+				Files.copy(logFile, Paths.get("./log1.txt"));
+				logFile.toFile().delete();
+				logFile.toFile().createNewFile();
+			}
+
+			//GRAVA LOG NO ARQUIVO
+			Files.write(logFile, Arrays.asList(logMessage), StandardOpenOption.APPEND);
+
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+
+    #enum
+
+
+
+public enum LogLevel {
+    SEVERE,
+    INFO,
+    DEBUG,
+    ERROR,
+    QUALQUER_LEVEL_QUE_VOCE_QUISER_SO_POR_NA_LISTA,
+    CHUPETA_DE_GALINHA;
+
+}

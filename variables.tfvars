@@ -4,7 +4,7 @@
 aws_region = "us-east-1"
 
 #GENERAL
-project_name= "lorem-ipsum"
+project_name= "REDWAY-CORP"
 
 #VPC
 aws_vpc_cidr = "172.32.0.0/16"
